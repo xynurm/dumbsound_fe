@@ -37,13 +37,10 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
       [e.target.name]: e.target.value
     });
   };
+  console.log("change",form)
 
-  const handleChangeGender = (e) => {
-    setForm({
-      ...form,
-      [e.target.select]: e.target.value
-    });
-  };
+
+
 
   const handleSubmit = useMutation(async (e) => {
     try {
@@ -99,7 +96,8 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
             <Form.Select
               style={style.form}
               className="fs-5 p-3 "
-              onChange={handleChangeGender}
+              name= "gender"
+              onChange={handleChange}
             >
               <option disabled selected hidden>
                 Gender
@@ -119,6 +117,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
               type="text"
               className="p-3 fs-5  "
               placeholder="Phone"
+              onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -128,6 +127,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
               type="text"
               className="p-3 fs-5  "
               placeholder="Address"
+              onChange={handleChange}
             />
           </Form.Group>
           <Button
@@ -135,6 +135,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
             variant="outline-none"
             className="fw-bold p-3"
             type="submit"
+            onClick={(e) => handleSubmit.mutate(e)}
           >
             Register
           </Button>

@@ -1,25 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import App from './App';
-import { BrowserRouter as Router } from "react-router-dom"
-import reportWebVitals from './reportWebVitals';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-
+import App from "./App";
+import { BrowserRouter as Router } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { UserContextProvider } from "./context/userContext";
 
 // Init Client from QueryClient() here ...
-const client = new QueryClient()
+const client = new QueryClient();
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-<React.StrictMode>
-<QueryClientProvider client={client}>
-    <Router>
-      <App />
-    </Router>
-    </QueryClientProvider>
+  <React.StrictMode>
+    <UserContextProvider>
+      <QueryClientProvider client={client}>
+        <Router>
+          <App />
+        </Router>
+      </QueryClientProvider>
+    </UserContextProvider>
   </React.StrictMode>
 );
 

@@ -43,36 +43,28 @@ const style = {
   }
 };
 
-const popover = (
-  <Popover id="popover-basic" style={style.bgDropdown}>
-    <Popover.Body>
-      <Nav.Link
-        // onClick={}
-        style={style.link}
-      >
-        <img alt="pay-img" src={Bill} style={style.imgPay} />
-        <span className="text-white fs-5  fw-semibold">Pay</span>
-      </Nav.Link>
-    </Popover.Body>
-    <hr style={style.line} />
-    <Popover.Body>
-      <Nav.Link
-        // onClick={logout}
-        style={style.link}
-      >
-        <img alt="logout-img" src={Logout} style={style.imgLogout} />
-        <span className="text-white fs-5 fw-semibold">Logout</span>
-      </Nav.Link>
-    </Popover.Body>
-  </Popover>
-);
-
-export default function DropdownUser() {
+export default function DropdownUser({logOut}) {
   return (
     <OverlayTrigger
       trigger="click"
       placement="bottom-end"
-      overlay={popover}
+      overlay={
+        <Popover id="popover-basic" style={style.bgDropdown}>
+          <Popover.Body>
+            <Nav.Link style={style.link}>
+              <img alt="pay-img" src={Bill} style={style.imgPay} />
+              <span className="text-white fs-5  fw-semibold">Pay</span>
+            </Nav.Link>
+          </Popover.Body>
+          <hr style={style.line} />
+          <Popover.Body>
+            <Nav.Link onClick={logOut} style={style.link}>
+              <img alt="logout-img" src={Logout} style={style.imgLogout} />
+              <span className="text-white fs-5 fw-semibold">Logout</span>
+            </Nav.Link>
+          </Popover.Body>
+        </Popover>
+      }
       style={style.trigger}
     >
       <img

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
+import { API } from "../../../config/api";
+import { UserContext } from "../../../context/userContext";
 
 const style = {
   colorText: {
@@ -18,27 +21,51 @@ const style = {
     color: "white"
   }
 };
-export default function LoginAuth({
-  show,
-  onHide,
-  switchLink,
-}) {
+export default function LoginAuth({ show, onHide, switchLink }) {
+  const [state, dispatch] = useContext(UserContext);
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = useMutation(async (e) => {
+    try {
+      e.preventDefault();
+      const response = await API.post("/login", form);
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: response.data.data
+      });
+
+      alert("Login success");
+    } catch (err) {
+      console.log(err);
+      alert("login failed");
+    }
+  });
+
   return (
     <Modal show={show} onHide={onHide} size="md" centered>
       <Modal.Body className="bg-dark rounded-2">
         <Modal.Title className=" text-white fw-bold fs-2 px-2 py-3">
           Login
         </Modal.Title>
-        {/* {message && message} */}
+
         <Form
-          // onSubmit={(e) => handleSubmit.mutate(e)}
+          onSubmit={(e) => handleSubmit.mutate(e)}
           className="w-100 m-auto mt-3 d-grid gap-2 p-2"
         >
           <Form.Group className="mb-3 " controlId="formBasicEmail">
             <Form.Control
-              // onChange={handleOnChange}
-              // value={dataSignin.email}
-              // name="email"
+              onChange={handleChange}
+              name="email"
               style={style.form}
               type="email"
               className="p-3"
@@ -47,9 +74,8 @@ export default function LoginAuth({
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
-              // onChange={handleOnChange}
-              // value={dataSignin.password}
-              // name="password"
+              onChange={handleChange}
+              name="password"
               style={style.form}
               type="password"
               className="p-3"
@@ -62,6 +88,7 @@ export default function LoginAuth({
             variant="outline-none"
             className="fw-bold p-3"
             type="submit"
+            onClick={(e) => handleSubmit.mutate(e)}
           >
             Login
           </Button>
