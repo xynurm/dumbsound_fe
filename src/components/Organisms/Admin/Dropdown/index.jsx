@@ -1,8 +1,9 @@
 import React from "react";
 import { Nav, OverlayTrigger, Popover } from "react-bootstrap";
-import Profile from "../../../assets/image/profile.png";
-import Bill from "../../../assets/image/bill.png";
-import Logout from "../../../assets/image/logout.png";
+import Logout from "../../../../assets/image/logout.png";
+import Music from "../../../../assets/image/music.png";
+import Profile from "../../../../assets/image/profile.png";
+import Artis from "../../../../assets/image/artis.png";
 import { useNavigate } from "react-router-dom";
 const style = {
   bgDropdown: {
@@ -20,8 +21,8 @@ const style = {
   },
 
   img: {
-    height: "25px",
     width: "25px",
+    height: "25px",
     marginRight: "15px"
   },
 
@@ -40,20 +41,34 @@ const style = {
   }
 };
 
-export default function DropdownUser({logOut}) {
-  const navigate = useNavigate()
+export default function DropdownAdmin({ logOut }) {
+  const navigate = useNavigate();
+
   return (
     <OverlayTrigger
       trigger="click"
       placement="bottom-end"
       overlay={
-        <Popover  id="popover-basic" style={style.bgDropdown}>
+        <Popover id="popover-basic" style={style.bgDropdown}>
           <Popover.Body>
-            <Nav.Link style={style.link} onClick={() => {
-                navigate("/payment");
-              }}>
-              <img alt="pay-img" src={Bill} style={style.img} />
-              <span className="text-white fs-5  fw-semibold">Pay</span>
+            <Nav.Link
+              style={style.link}
+              className="mb-4 "
+              onClick={() => {
+                navigate("/add-music");
+              }}
+            >
+              <img alt="pay-img" src={Music} style={style.img} />
+              <span className="text-white fs-5  fw-semibold">Add Music</span>
+            </Nav.Link>
+            <Nav.Link
+              style={style.link}
+              onClick={() => {
+                navigate("/add-artis");
+              }}
+            >
+              <img alt="pay-img" src={Artis} style={style.img} />
+              <span className="text-white fs-5 fw-semibold">Add Artis</span>
             </Nav.Link>
           </Popover.Body>
           <hr style={style.line} />

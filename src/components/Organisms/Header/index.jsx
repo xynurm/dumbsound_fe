@@ -5,12 +5,18 @@ import { API, setAuthToken } from "../../../config/api";
 import { UserContext } from "../../../context/userContext";
 import LoginAuth from "../../Molecules/ModalAuth/Login";
 import RegisterAuth from "../../Molecules/ModalAuth/Register";
+import DropdownAdmin from "../Admin/Dropdown";
 import DropdownUser from "../Dropdown/DropdownUser";
+
+const adminStyle = {
+  backgroundColor: "#1F1F1F",
+  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
+};
 
 export default function Header() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [state, dispatch] = useContext(UserContext);
 
@@ -18,8 +24,8 @@ export default function Header() {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-   
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   const checkUser = async () => {
@@ -43,97 +49,181 @@ export default function Header() {
         type: "USER_SUCCESS",
         payload
       });
+
+      console.log("data check-user:", response.data.data)
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     checkUser();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const logOut = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/")
-  }
+    navigate(0);
+  };
 
   return (
     <>
-      <Navbar scrolling light expand="md" fixed="top" className="mb-3">
-        <Container fluid>
-          <Navbar.Brand href="#">
-            <img
-              src={process.env.PUBLIC_URL + "/image/logo3.png"}
-              width="230vw"
-              className="d-inline-block align-top "
-              alt="dumbsound logo"
-            />
-          </Navbar.Brand>
-          {state.isLogin ? (
-             state.user.listAs === "0" ? (
-              <DropdownUser logOut={logOut} />
-            ) : (
-              <DropdownUser logOut={logOut} />
-            )
-          ) : (
-            <>
-              <Navbar.Toggle
-                aria-controls="offcanvasNavbar-expand-md"
-                className="bg-light"
-              />
-              <Navbar.Offcanvas
-                id="offcanvasNavbar-expand-md"
-                aria-labelledby="offcanvasNavbarLabel-expand-md"
-                placement="end"
-                className="bg-transparent"
-              >
-                <Offcanvas.Header closeButton className="bg-dark">
-                  <Offcanvas.Title id="offcanvasNavbarLabel-expand-md">
-                    <img
-                      src={process.env.PUBLIC_URL + "/image/logo3.png"}
-                      width="230vw"
-                      className="d-inline-block align-top "
-                      alt="dumbsound logo"
-                    />
-                  </Offcanvas.Title>
-                </Offcanvas.Header>
-                <Nav className="justify-content-end flex-row-2 pe-3">
-                  <Offcanvas.Body>
-                    <button
-                      className="mx-2 btnSecond fw-bold"
-                      onClick={() => setShowLogin(true)}
-                    >
-                      Login
-                    </button>
-                    <button
-                      className="mx-2 btnFirst fw-bold"
-                      onClick={() => setShowRegister(true)}
-                    >
-                      Register
-                    </button>
-                  </Offcanvas.Body>
-                </Nav>
-              </Navbar.Offcanvas>
-            </>
-          )}
-        </Container>
-      </Navbar>
-      <LoginAuth
-        show={showLogin}
-        onHide={() => setShowLogin(false)}
-        switchLink={() => {
-          setShowRegister(true);
-          setShowLogin(false);
-        }}
-      />
-      <RegisterAuth
-        show={showRegister}
-        onHide={() => setShowRegister(false)}
-        switchLink={() => {
-          setShowRegister(false);
-          setShowLogin(true);
-        }}
-      />
+      {state.user.listAs === "1" ? (
+        <>
+          <Navbar scrolling light expand="md" fixed="top" style={adminStyle}>
+            <Container fluid>
+              <Navbar.Brand href="/landing-page">
+                <img
+                  src={process.env.PUBLIC_URL + "/image/admin-logo.png"}
+                  width="200vw"
+                  className="d-inline-block align-top "
+                  alt="dumbsound logo"
+                />
+              </Navbar.Brand>
+              {state.isLogin ? (
+                state.user.listAs === "1" ? (
+                  <DropdownAdmin logOut={logOut} />
+                ) : (
+                  <DropdownUser logOut={logOut} />
+                )
+              ) : (
+                <>
+                  <Navbar.Toggle
+                    aria-controls="offcanvasNavbar-expand-md"
+                    className="bg-light"
+                  />
+                  <Navbar.Offcanvas
+                    id="offcanvasNavbar-expand-md"
+                    aria-labelledby="offcanvasNavbarLabel-expand-md"
+                    placement="end"
+                    className="bg-transparent"
+                  >
+                    <Offcanvas.Header closeButton className="bg-dark">
+                      <Offcanvas.Title id="offcanvasNavbarLabel-expand-md">
+                        <img
+                          src={process.env.PUBLIC_URL + "/image/logo3.png"}
+                          width="230vw"
+                          className="d-inline-block align-top "
+                          alt="dumbsound logo"
+                        />
+                      </Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Nav className="justify-content-end flex-row-2 pe-3">
+                      <Offcanvas.Body>
+                        <button
+                          className="mx-2 btnSecond fw-bold"
+                          onClick={() => setShowLogin(true)}
+                        >
+                          Login
+                        </button>
+                        <button
+                          className="mx-2 btnFirst fw-bold"
+                          onClick={() => setShowRegister(true)}
+                        >
+                          Register
+                        </button>
+                      </Offcanvas.Body>
+                    </Nav>
+                  </Navbar.Offcanvas>
+                </>
+              )}
+            </Container>
+          </Navbar>
+          <LoginAuth
+            show={showLogin}
+            onHide={() => setShowLogin(false)}
+            switchLink={() => {
+              setShowRegister(true);
+              setShowLogin(false);
+            }}
+          />
+          <RegisterAuth
+            show={showRegister}
+            onHide={() => setShowRegister(false)}
+            switchLink={() => {
+              setShowRegister(false);
+              setShowLogin(true);
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Navbar scrolling light expand="md" fixed="top" className="mb-3">
+            <Container fluid>
+              <Navbar.Brand href="/">
+                <img
+                  src={process.env.PUBLIC_URL + "/image/logo3.png"}
+                  width="230vw"
+                  className="d-inline-block align-top "
+                  alt="dumbsound logo"
+                />
+              </Navbar.Brand>
+              {state.isLogin ? (
+                state.user.listAs === "1" ? (
+                  <DropdownAdmin logOut={logOut} />
+                ) : (
+                  <DropdownUser logOut={logOut} />
+                )
+              ) : (
+                <>
+                  <Navbar.Toggle
+                    aria-controls="offcanvasNavbar-expand-md"
+                    className="bg-light"
+                  />
+                  <Navbar.Offcanvas
+                    id="offcanvasNavbar-expand-md"
+                    aria-labelledby="offcanvasNavbarLabel-expand-md"
+                    placement="end"
+                    className="bg-transparent"
+                  >
+                    <Offcanvas.Header closeButton className="bg-dark">
+                      <Offcanvas.Title id="offcanvasNavbarLabel-expand-md">
+                        <img
+                          src={process.env.PUBLIC_URL + "/image/logo3.png"}
+                          width="230vw"
+                          className="d-inline-block align-top "
+                          alt="dumbsound logo"
+                        />
+                      </Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Nav className="justify-content-end flex-row-2 pe-3">
+                      <Offcanvas.Body>
+                        <button
+                          className="mx-2 btnSecond fw-bold"
+                          onClick={() => setShowLogin(true)}
+                        >
+                          Login
+                        </button>
+                        <button
+                          className="mx-2 btnFirst fw-bold"
+                          onClick={() => setShowRegister(true)}
+                        >
+                          Register
+                        </button>
+                      </Offcanvas.Body>
+                    </Nav>
+                  </Navbar.Offcanvas>
+                </>
+              )}
+            </Container>
+          </Navbar>
+          <LoginAuth
+            show={showLogin}
+            onHide={() => setShowLogin(false)}
+            switchLink={() => {
+              setShowRegister(true);
+              setShowLogin(false);
+            }}
+          />
+          <RegisterAuth
+            show={showRegister}
+            onHide={() => setShowRegister(false)}
+            switchLink={() => {
+              setShowRegister(false);
+              setShowLogin(true);
+            }}
+          />
+        </>
+      )}
     </>
   );
 }

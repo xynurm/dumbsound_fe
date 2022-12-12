@@ -4,7 +4,7 @@
   font-family: "PT Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- 
+
   -ms-overflow-style: none;
 }
 
@@ -55,6 +55,19 @@
   background-size: cover;
   background-position: center;
   height: 100%;
+  letter-spacing: 1px;
+}
+
+.AddMusic {
+  background: #161616;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  min-height: 100vh;
   letter-spacing: 1px;
 }
 

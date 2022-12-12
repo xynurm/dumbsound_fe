@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Heroes from "../components/Organisms/Heroes";
 import ListMusic from "../components/Organisms/ListMusic";
 

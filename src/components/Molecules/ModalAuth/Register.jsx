@@ -3,6 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
 import { API } from "../../../config/api";
+import PopUp from "../../Organisms/PopUp";
 
 const style = {
   colorText: {
@@ -31,28 +32,25 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
     address: ""
   });
 
+  const [modalShow, setModalShow] = useState(false);
+
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value
     });
   };
-  console.log("change",form)
-
-
-
 
   const handleSubmit = useMutation(async (e) => {
     try {
       e.preventDefault();
-
-      const response = await API.post("/register", form);
-      console.log("data berhasil ditambahkan", response.data.data);
+      await API.post("/register", form);
     } catch (err) {
       console.log(err);
     }
   });
   return (
+    <>
     <Modal show={show} onHide={onHide} size="md" centered>
       <Modal.Body className="bg-dark rounded-2">
         <Modal.Title className=" text-white fw-bold fs-2 px-2 py-3">
@@ -62,7 +60,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
           onSubmit={(e) => handleSubmit.mutate(e)}
           className="w-100 m-auto mt-3 d-grid gap-2 p-2"
         >
-          <Form.Group className="mb-3 " controlId="formBasicEmail">
+          <Form.Group className="mb-3 ">
             <Form.Control
               name="email"
               style={style.form}
@@ -72,7 +70,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Control
               name="password"
               style={style.form}
@@ -82,7 +80,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Control
               name="fullName"
               style={style.form}
@@ -92,25 +90,21 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Select
               style={style.form}
               className="fs-5 p-3 "
-              name= "gender"
+              name="gender"
               onChange={handleChange}
             >
               <option disabled selected hidden>
                 Gender
               </option>
-              <option value="male">
-                Male
-              </option>
-              <option value="female">
-                Female
-              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </Form.Select>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Control
               name="phone"
               style={style.form}
@@ -120,7 +114,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Control
               name="address"
               style={style.form}
@@ -151,5 +145,12 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
         </Form>
       </Modal.Body>
     </Modal>
+    <PopUp
+     show={modalShow}
+     onHide={() => setModalShow(false)}
+     name="Register"
+   />
+    </>
+    
   );
 }
