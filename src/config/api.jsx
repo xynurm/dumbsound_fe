@@ -1,9 +1,8 @@
 import axios from 'axios'
 
 export const API = axios.create({
-    // baseURL: process.env.REACT_APP_BASEURL,
-    // baseURL:"http://localhost:5000/api/v1"
-    baseURL:"https://dumbsoundapi-production.up.railway.app/api/v1"
+    baseURL: process.env.REACT_APP_BASEURL,
+   
 })
 
 export const setAuthToken = (token) => {

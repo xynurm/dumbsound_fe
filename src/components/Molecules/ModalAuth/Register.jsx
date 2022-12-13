@@ -45,6 +45,7 @@ export default function RegisterAuth({ show, onHide, switchLink }) {
     try {
       e.preventDefault();
       await API.post("/register", form);
+      setModalShow(true);
     } catch (err) {
       console.log(err);
     }

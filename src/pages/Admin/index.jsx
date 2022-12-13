@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { API } from "../../config/api";
-import { UserContext } from "../../context/userContext";
 
 const style = {
   header: {
@@ -27,77 +26,90 @@ const style = {
 };
 
 export default function Admin() {
-  const [state, dispatch] = useContext(UserContext);
-  let { data: transactions, refetch } = useQuery("TransTable", async () => {
+  // const [resultDate, setResultDate] = useState();
+
+  let { data: transactions } = useQuery("transactionsCaches", async () => {
     const response = await API.get("/transactions");
-    console.log("trans", response);
+    console.log("transactions :", response.data.data);
     return response.data.data;
   });
 
-  
+  // for (let i = 0; i < transactions?.length; i++) {
+  //   const startDate = new Date(transactions[i]?.startDate.getTime())
+  //   const dueDate = new Date (transactions[i]?.dueDate.getTime());
+   
+  //   const result = (Math.floor(dueDate - startDate)/(24*3600*1000))
+  //   console.log("date anjg:", result)
+    // return setResultDate(result);
+  // }
+
+  // console.log("date :", resultDate);
+
+
+  const income = transactions?.reduce((accum, item) => {
+    return accum + item.price;
+  }, 0);
+
   return (
     <>
-    <section fluid className="AddMusic">
-    <Container className="py-5 ">
-        <h4 className="py-5" style={style.header}>
-          Incoming Transaction
-        </h4>
-        <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th style={style.headerTable}>No</th>
-              <th style={style.headerTable}>Users</th>
-              {/* <th style={style.headerTable}>Remaining Active</th> */}
-              <th style={style.headerTable}>Status User</th>
-              <th style={style.headerTable}>Status Payment</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions === 0 ? (
+      <section fluid className="AddMusic">
+        <Container className="py-5 ">
+          <h4 className="py-5" style={style.header}>
+            Incoming Transaction
+          </h4>
+          <Table striped bordered hover variant="dark">
+            <thead>
               <tr>
-                <td colSpan={6}>Not Transaction</td>
+                <th style={style.headerTable}>No</th>
+                <th style={style.headerTable}>Users</th>
+                {/* <th style={style.headerTable}>Remaining Active</th> */}
+                <th style={style.headerTable}>Status User</th>
+                <th style={style.headerTable}>Status Payment</th>
               </tr>
-            ) : (
-              transactions?.map((element, number) => {
-                number += 1;
-                // remaining = element.starDate - element.dueDate
-                // console.log(remaining)
+            </thead>
+            <tbody>
+              {transactions === 0 ? (
+                <tr>
+                  <td colSpan={6}>No Transaction</td>
+                </tr>
+              ) : (
+                transactions?.map((element, number) => {
+                  number += 1;
+                  // remaining = element.starDate - element.dueDate
+                  // console.log(remaining)
 
-                return (
-                  <tr>
-                    <th>{number}</th>
-                    <th>{element.user.fullName}</th>
-                    {/* <th>{element?.dueDate }</th> */}
-                    <th>
-                      {element?.user.subscribe === "true" ? (
-                        <label style={style.active}>Active</label>
-                      ) : (
-                        <label style={style.notActive}>Not Active</label>
-                      )}
-                    </th>
-                    <th>
-                      {element.status === "pending" ? (
-                        <label style={style.pending}>Pending</label>
-                      ) : element.status === "Success" ? (
-                        <label style={style.active}>Success</label>
-                      ) : element.status === "Cancel" ? (
-                        <label style={style.notActive}>Cancel</label>
-                      ) : null}
-                    </th>
-                  </tr>
-                );
-              })
-            )}
-            {/* <tr>
+                  return (
+                    <tr>
+                      <th>{number}</th>
+                      <th>{element.user.fullName}</th>
+                      {/* <th>{element?.dueDate }</th> */}
+                      <th>
+                        {element?.user.subscribe === "true" ? (
+                          <label style={style.active}>Active</label>
+                        ) : (
+                          <label style={style.notActive}>Not Active</label>
+                        )}
+                      </th>
+                      <th>
+                        {element?.status === "pending" ? (
+                          <label style={style.pending}>Pending</label>
+                        ) : element?.status === "success" ? (
+                          <label style={style.active}>Success</label>
+                        ) : null}
+                      </th>
+                    </tr>
+                  );
+                })
+              )}
+              <tr>
               <td style={style.headerTable} colSpan={6}>
-                Income :{" "}
+                Income : {income}
               </td>
-            </tr> */}
-          </tbody>
-        </Table>
-      </Container>
-    </section>
-  
+            </tr>
+            </tbody>
+          </Table>
+        </Container>
+      </section>
     </>
   );
 }

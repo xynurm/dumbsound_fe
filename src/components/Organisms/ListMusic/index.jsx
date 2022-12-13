@@ -44,8 +44,8 @@ export default function ListMusic() {
               Dengarkan Dan Rasakan
             </h4>
             <Row className="justify-content-start px-5">
-              {musics?.map((music) => (
-                <Col lg={3} sm={1} className="py-3">
+              {musics?.map((music, index) => (
+                <Col lg={3} sm={1} className="py-3" key={index}>
                   <Card
                     style={{ backgroundColor: "#3A3A3A" }}
                     className="text-white"

@@ -49,8 +49,6 @@ export default function Header() {
         type: "USER_SUCCESS",
         payload
       });
-
-      console.log("data check-user:", response.data.data)
     } catch (error) {
       console.log(error);
     }
@@ -147,7 +145,7 @@ export default function Header() {
         </>
       ) : (
         <>
-          <Navbar scrolling light expand="md" fixed="top" className="mb-3">
+          <Navbar scrolling="true" light="true" expand="md" fixed="top" className="mb-3">
             <Container fluid>
               <Navbar.Brand href="/">
                 <img
