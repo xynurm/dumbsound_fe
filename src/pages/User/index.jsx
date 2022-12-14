@@ -23,7 +23,6 @@ const style = {
 
   bgButton: {
     width: "500px",
-    color: "white",
     backgroundColor: "#EE4622",
     border: "2px solid #EE4622"
   }
@@ -103,8 +102,9 @@ export default function Payment() {
             <div className="d-flex justify-content-center">
               <Button
                 style={style.bgButton}
-                className="my-4 fs-5 fw-bold"
+                className="my-4 fs-5 fw-bold text-white"
                 type="submit"
+                
                 onClick={(e) => handlePay.mutate(e)}
               >
                 Pay
@@ -115,12 +115,24 @@ export default function Payment() {
       ) : (
         <section fluid id="payment" className="AddMusic pt-5 pb-5">
           <Container className="pt-5">
-            <h3 className="text-center py-4 fw-bold text-white">Akun anda sudah premium</h3>
+            <h3 className="text-center py-4 fw-bold text-white">
+              Akun anda sudah premium
+            </h3>
             <div className="text-center">
               <p className="text-white fw-bold fs-5">
-              Nikmati streaming music yang kekinian dari{" "}
-              <span style={style.textDumb} >DUMB</span>SOUND
+                Nikmati streaming music yang kekinian dari{" "}
+                <span style={style.textDumb}>DUMB</span>SOUND
               </p>
+            </div>
+            <div className="d-flex justify-content-center">
+              <Button
+                style={style.bgButton}
+                className="my-4 fw-bold"
+                type="submit"
+                onClick={() => navigate("/")}
+              >
+                Go to home
+              </Button>
             </div>
           </Container>
         </section>
