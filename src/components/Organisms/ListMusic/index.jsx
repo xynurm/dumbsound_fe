@@ -60,7 +60,8 @@ export default function ListMusic() {
                     <Card.Img
                       variant="top"
                       src={music?.thumbnail}
-                      width={130}
+                      width="230px"
+                      height="230px"
                       className="p-3 pb-2"
                     />
                     <Card.Body className="p-4 pt-3 fs-6">
@@ -68,10 +69,10 @@ export default function ListMusic() {
                         direction="horizontal"
                         className="justify-content-between"
                       >
-                        <Card.Title className="fw-bold truncate">
+                        <Card.Title className="fw-bold text-truncate">
                           {music?.title}
                         </Card.Title>
-                        <Card.Title>{music?.year}</Card.Title>
+                        <Card.Title className="fs-5">{music?.year}</Card.Title>
                       </Stack>
                       <Card.Text>{music?.artis.name}</Card.Text>
                     </Card.Body>

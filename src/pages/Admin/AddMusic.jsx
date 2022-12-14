@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useMutation, useQuery } from "react-query";
 import PopUp from "../../components/Organisms/PopUp";
 import { API } from "../../config/api";
