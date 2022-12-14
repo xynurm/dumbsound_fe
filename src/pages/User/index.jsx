@@ -61,6 +61,8 @@ export default function Payment() {
           alert("you closed the popup without finishing the payment");
         }
       });
+
+      navigate(0)
     } catch (err) {
       console.log(err);
     }

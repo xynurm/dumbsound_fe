@@ -9,6 +9,7 @@ import AddMusic from "./pages/Admin/AddMusic";
 import AddArtis from "./pages/Admin/AddArtis";
 import Payment from "./pages/User";
 import Admin from "./pages/Admin";
+import ListArtis from "./pages/Admin/ListArtis";
 
 function App() {
   useEffect(() => {
@@ -26,7 +27,7 @@ function App() {
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/add-music" element={<AddMusic />} />
           <Route path="/add-artis" element={<AddArtis />} />
-  
+          <Route path="/artis" element={<ListArtis />} />
         </Routes>
       ) : (
         <Routes>

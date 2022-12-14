@@ -1,3 +1,5 @@
+import datetimeDifference from "datetime-difference";
+import moment from "moment/moment";
 import React, { useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useQuery } from "react-query";
@@ -26,25 +28,22 @@ const style = {
 };
 
 export default function Admin() {
-  // const [resultDate, setResultDate] = useState();
+  // const [result, setResult] = useState([]);
+  // const [due, setDue] = useState([]);
 
   let { data: transactions } = useQuery("transactionsCaches", async () => {
     const response = await API.get("/transactions");
     console.log("transactions :", response.data.data);
+
     return response.data.data;
   });
 
   // for (let i = 0; i < transactions?.length; i++) {
-  //   const startDate = new Date(transactions[i]?.startDate.getTime())
-  //   const dueDate = new Date (transactions[i]?.dueDate.getTime());
-   
-  //   const result = (Math.floor(dueDate - startDate)/(24*3600*1000))
-  //   console.log("date anjg:", result)
-    // return setResultDate(result);
+  //   const now = moment()
+  //   const DueDate =transactions[i].dueDate
+
+  //   .setResult(result)
   // }
-
-  // console.log("date :", resultDate);
-
 
   const income = transactions?.reduce((accum, item) => {
     return accum + item.price;
@@ -75,14 +74,16 @@ export default function Admin() {
               ) : (
                 transactions?.map((element, number) => {
                   number += 1;
-                  // remaining = element.starDate - element.dueDate
-                  // console.log(remaining)
+                  // const date1 = moment()
+                  // const date2 = moment(element?.dueDate);
+                  // const diff = moment.preciseDiff(date2, date1, true)
+                  // console.log(diff);
 
                   return (
                     <tr>
                       <th>{number}</th>
                       <th>{element.user.fullName}</th>
-                      {/* <th>{element?.dueDate }</th> */}
+                      {/* <th>{element?.remaining }</th> */}
                       <th>
                         {element?.user.subscribe === "true" ? (
                           <label style={style.active}>Active</label>
@@ -102,10 +103,10 @@ export default function Admin() {
                 })
               )}
               <tr>
-              <td style={style.headerTable} colSpan={6}>
-                Income : {income}
-              </td>
-            </tr>
+                <td style={style.headerTable} colSpan={6}>
+                  Income : {income}
+                </td>
+              </tr>
             </tbody>
           </Table>
         </Container>
