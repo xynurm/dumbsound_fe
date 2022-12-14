@@ -68,7 +68,7 @@ export default function ListMusic() {
                         direction="horizontal"
                         className="justify-content-between"
                       >
-                        <Card.Title className="fw-bold">
+                        <Card.Title className="fw-bold truncate">
                           {music?.title}
                         </Card.Title>
                         <Card.Title>{music?.year}</Card.Title>
