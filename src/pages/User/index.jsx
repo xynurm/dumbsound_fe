@@ -88,15 +88,15 @@ export default function Payment() {
       {state.user.subscribe === "false" ? (
         <section fluid id="payment" className="AddMusic pt-5 pb-5">
           <Container className="pt-5">
-            <h3 className="text-center pt-5 pb-4 fw-bold text-white">
+            <h3 className="text-center pt-5 pb-4 fw-bold text-white fs-2">
               Premium
             </h3>
             <div className="my-3 text-center">
-              <p className="text-white fw-bold fs-6">
+              <p className="text-white fw-bold fs-5">
                 Bayar sekarang dan nikmati streaming music yang kekinian dari{" "}
                 <span style={style.textDumb}>DUMB</span>SOUND
               </p>
-              <p className="text-white fw-bold fs-6">
+              <p className="text-white fw-bold fs-5">
                 <span style={style.textDumb}>DUMB</span>SOUND : 0981312323
               </p>
             </div>
@@ -115,13 +115,11 @@ export default function Payment() {
       ) : (
         <section fluid id="payment" className="AddMusic pt-5 pb-5">
           <Container className="pt-5">
-            <h3 className="text-center py-4 fw-bold text-white">Pertamax</h3>
+            <h3 className="text-center py-4 fw-bold text-white">Akun anda sudah premium</h3>
             <div className="text-center">
               <p className="text-white fw-bold fs-5">
-                Your Account is
-                <span style={style.textDumb} className="fs-4">
-                  {""} Pertamax
-                </span>
+              Nikmati streaming music yang kekinian dari{" "}
+              <span style={style.textDumb} >DUMB</span>SOUND
               </p>
             </div>
           </Container>

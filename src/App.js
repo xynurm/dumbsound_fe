@@ -1,15 +1,14 @@
+import { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import LandingPage from "./pages/LandingPage";
-import User from "./pages/User";
-import { useContext, useEffect } from "react";
 import Header from "./components/Organisms/Header";
 import { UserContext } from "./context/userContext";
-import AddMusic from "./pages/Admin/AddMusic";
-import AddArtis from "./pages/Admin/AddArtis";
-import Payment from "./pages/User";
 import Admin from "./pages/Admin";
+import AddArtis from "./pages/Admin/AddArtis";
+import AddMusic from "./pages/Admin/AddMusic";
 import ListArtis from "./pages/Admin/ListArtis";
+import LandingPage from "./pages/LandingPage";
+import Payment from "./pages/User";
 
 function App() {
   useEffect(() => {
