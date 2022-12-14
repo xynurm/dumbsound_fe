@@ -45,12 +45,12 @@ export default function Payment() {
         onSuccess: function (result) {
           /* You may add your own implementation here */
           console.log(result);
-          navigate("/");
+          navigate(0);
         },
         onPending: function (result) {
           /* You may add your own implementation here */
           console.log(result);
-          navigate("/");
+          navigate(0);
         },
         onError: function (result) {
           /* You may add your own implementation here */
@@ -61,8 +61,6 @@ export default function Payment() {
           alert("you closed the popup without finishing the payment");
         }
       });
-
-      navigate(0)
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +71,7 @@ export default function Payment() {
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
     //change this according to your client-key
     const myMidtransClientKey = process.env.REACT_APP_MIDTRANS_CLIENT_KEY; // Get REACT_APP_MIDTRANS_CLIENT_KEY from ENV here ...
- 
+
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
     // optional if you want to set script attribute
@@ -117,13 +115,13 @@ export default function Payment() {
       ) : (
         <section fluid id="payment" className="AddMusic pt-5 pb-5">
           <Container className="pt-5">
-            <h3 className="text-center py-4 fw-bold text-white">
-              Pertamax
-            </h3>
+            <h3 className="text-center py-4 fw-bold text-white">Pertamax</h3>
             <div className="text-center">
               <p className="text-white fw-bold fs-5">
                 Your Account is
-                <span style={style.textDumb} className="fs-4">{""} Pertamax</span>
+                <span style={style.textDumb} className="fs-4">
+                  {""} Pertamax
+                </span>
               </p>
             </div>
           </Container>
