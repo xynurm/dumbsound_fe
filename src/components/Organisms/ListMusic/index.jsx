@@ -9,8 +9,10 @@ import RegisterAuth from "../../Molecules/ModalAuth/Register";
 import Audio from "../../Molecules/MusicItem/Audio";
 
 export default function ListMusic() {
-  let { data: musics } = useQuery("musicsCaches", async () => {
-    const response = await API.get("/musics");
+
+
+  let { data: gmusics } = useQuery("gmusics", async () => {
+    const response = await API.get("/gmusics");
     return response.data.data;
   });
 
@@ -22,7 +24,7 @@ export default function ListMusic() {
 
   const [audioShow, setAudioShow] = useState(false);
   const [dataAudio, setDataAudio] = useState();
-
+  
   const handleShow = () => setAudioShow(true);
   const handleClose = () => setAudioShow(false);
 
@@ -32,6 +34,15 @@ export default function ListMusic() {
   };
   const navigate = useNavigate();
 
+  let { data: musics } = useQuery("musicsCaches", async () => {
+    try {
+      const response = await API.get("/musics");
+      return response.data.data;
+    } catch (err) {
+      console.log("goblog :", err) 
+    }
+  
+  });
   return (
     <>
       <section className="ListMusic">
@@ -43,43 +54,79 @@ export default function ListMusic() {
             >
               Dengarkan Dan Rasakan
             </h4>
-            <Row className="justify-content-start px-5">
-              {musics?.map((music, index) => (
-                <Col lg={3} sm={1} className="py-3" key={index}>
-                  <Card
-                    style={{ backgroundColor: "#3A3A3A" }}
-                    className="text-white"
-                    onClick={() => {
-                      state.isLogin === false
-                        ? handleShowLogin()
-                        : state.user.subscribe === "true"
-                        ? handleMusicDetail(music)
-                        : navigate("/payment");
-                    }}
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={music?.thumbnail}
-                      width="230px"
-                      height="230px"
-                      className="p-3 pb-2"
-                    />
-                    <Card.Body className="p-4 pt-3 fs-6">
-                      <Stack
-                        direction="horizontal"
-                        className="justify-content-between"
-                      >
-                        <Card.Title className="fw-bold text-truncate">
-                          {music?.title}
-                        </Card.Title>
-                        <Card.Title className="fs-5">{music?.year}</Card.Title>
-                      </Stack>
-                      <Card.Text>{music?.artis.name}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+            {state.isLogin ? (
+              <Row className="justify-content-start px-5">
+                {musics?.map((music, index) => (
+                  <Col lg={3} sm={1} className="py-3" key={index}>
+                    <Card
+                      style={{ backgroundColor: "#3A3A3A" }}
+                      className="text-white"
+                      onClick={() => {
+                        state.user.subscribe === "true"
+                          ? handleMusicDetail(music)
+                          : navigate("/payment");
+                      }}
+                    >
+                      <Card.Img
+                        variant="top"
+                        src={music?.thumbnail}
+                        width="230px"
+                        height="230px"
+                        className="p-3 pb-2"
+                      />
+                      <Card.Body className="p-4 pt-3 fs-6">
+                        <Stack
+                          direction="horizontal"
+                          className="justify-content-between"
+                        >
+                          <Card.Title className="fw-bold text-truncate">
+                            {music?.title}
+                          </Card.Title>
+                          <Card.Title className="fs-5">
+                            {music?.year}
+                          </Card.Title>
+                        </Stack>
+                        <Card.Text>{music?.artis.name}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <Row className="justify-content-start px-5">
+                {gmusics?.map((item, index) => (
+                  <Col lg={3} sm={1} className="py-3" key={index}>
+                    <Card
+                      style={{ backgroundColor: "#3A3A3A" }}
+                      className="text-white"
+                      onClick={() => {
+                        handleShowLogin();
+                      }}
+                    >
+                      <Card.Img
+                        variant="top"
+                        src={item?.thumbnail}
+                        width="230px"
+                        height="230px"
+                        className="p-3 pb-2"
+                      />
+                      <Card.Body className="p-4 pt-3 fs-6">
+                        <Stack
+                          direction="horizontal"
+                          className="justify-content-between"
+                        >
+                          <Card.Title className="fw-bold text-truncate">
+                            {item?.title}
+                          </Card.Title>
+                          <Card.Title className="fs-5">{item?.year}</Card.Title>
+                        </Stack>
+                        <Card.Text>{item?.artis.name}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            )}
           </div>
         </Container>
       </section>
